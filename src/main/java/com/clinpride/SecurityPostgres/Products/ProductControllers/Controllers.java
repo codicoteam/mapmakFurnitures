@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
+@CrossOrigin(origins = "http://localhost:5000" ,allowCredentials = "true")
 @RestController
 @RequestMapping("/api/v1/products")
 
@@ -22,7 +23,7 @@ public class Controllers {
         this.productService = productService;
     }
 
-
+    @CrossOrigin(origins = "http://localhost:5000" ,allowCredentials = "true")
     @PostMapping("/create-product")
     public ResponseEntity<ProductsModel> createProduct(@RequestBody ProductsModel product) {
         ProductsModel savedProduct = productService.createProduct(product);

@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@CrossOrigin(origins = {"http://localhost:3000", "http://localhost:5000"})
 @AllArgsConstructor
 @RequestMapping("/api/v1/bulk-buying")
 public class BulkBuyingControllers {

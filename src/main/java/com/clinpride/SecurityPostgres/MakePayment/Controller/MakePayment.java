@@ -3,10 +3,7 @@ package com.clinpride.SecurityPostgres.MakePayment.Controller;
 import com.clinpride.SecurityPostgres.InviteUser.models.InviteUserModel;
 import com.clinpride.SecurityPostgres.MakePayment.Model.MakePaymentModel;
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import zw.co.paynow.constants.MobileMoneyMethod;
 import zw.co.paynow.core.Paynow;
 import zw.co.paynow.core.Paynow;
@@ -15,6 +12,7 @@ import zw.co.paynow.responses.MobileInitResponse;
 import zw.co.paynow.responses.StatusResponse;
 import zw.co.paynow.responses.WebInitResponse;
 
+@CrossOrigin(origins = {"http://localhost:3000", "http://localhost:5000"})
 @RestController
 
 @AllArgsConstructor
