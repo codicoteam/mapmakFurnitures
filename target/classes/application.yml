@@ -1,0 +1,6 @@
+spring:
+  data:
+    mongodb:
+      database: Product
+      host: furniture_map_mak_db
+      port: 27017

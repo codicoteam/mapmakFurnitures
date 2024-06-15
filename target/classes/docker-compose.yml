@@ -1,0 +1,14 @@
+version: "2"
+services:
+  furniture_map_mak_db:
+    image: mongo:latest
+    container_name: "furniture_map_mak_db"
+    ports:
+      - 27017:27017
+  furniture_map_mak:
+    image: furniture_map_mak:1.0
+    container_name: furniture_map_mak
+    ports:
+      - 8080:8080
+    links:
+      - furniture_map_mak_db
