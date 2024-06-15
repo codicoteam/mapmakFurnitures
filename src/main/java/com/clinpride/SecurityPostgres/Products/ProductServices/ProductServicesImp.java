@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.List;
 import java.util.Optional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 @RequiredArgsConstructor
 @Service
@@ -72,8 +75,9 @@ public class ProductServicesImp implements ProductServices{
     }
 
     @Override
-    public List<ProductsModel> getAllProduct() {
-        return productRepo.findAll();
+    public Page<ProductsModel> getAllProduct(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return productRepo.findAll(pageable);
     }
 
     @Override
@@ -82,39 +86,75 @@ public class ProductServicesImp implements ProductServices{
     }
 
     @Override
-    public List<ProductsModel> searchCategory(String categoryName) {
+    public Page<ProductsModel> searchCategory(String categoryName,  int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
         List<ProductsModel> products = productRepo.findByProductCategoriesCategoryName(categoryName);
         if (products.isEmpty()) {
             throw new NotFoundException("Category not found");
         }
-        return products;
+        return productRepo.findByProductCategoriesCategoryName(categoryName, pageable);
     }
 
     @Override
-    public List<ProductsModel> searchColor(String color) {
-        return productRepo.findByProductAttributesColor(color);
+    public Page<ProductsModel> searchColor(String color, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        List<ProductsModel> productsColor = productRepo.findByProductAttributesColor(color);
+
+        if (productsColor.isEmpty()) {
+            throw new NotFoundException("Color not found");
+        }
+        return productRepo.findByProductAttributesColor(color, pageable);
     }
 
     @Override
-    public List<ProductsModel> searchType(String type) {
-        return productRepo.findByProductAttributesType(type);
+    public Page<ProductsModel> searchType(String type,  int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        List<ProductsModel> productsColor = productRepo.findByProductAttributesType(type);
+        if (productsColor.isEmpty()) {
+            throw new NotFoundException("Type not found");
+        }
+        return productRepo.findByProductAttributesType(type, pageable);
     }
 
     @Override
-    public List<ProductsModel> RangerProduct(double minPrice, double maxPrice) {
-        return productRepo.findByProductPriceBetween(minPrice, maxPrice);
+    public Page<ProductsModel> RangerProduct(double minPrice, double maxPrice,  int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        List<ProductsModel> productsPriceBetween = productRepo.findByProductPriceBetween(minPrice, maxPrice);
+        if (productsPriceBetween.isEmpty()) {
+            throw new NotFoundException("range not found");
+        }
+        return productRepo.findByProductPriceBetween(minPrice, maxPrice, pageable);
     }
 
     @Override
-    public List<ProductsModel> searchByFeature(String feature) {
-        return productRepo.findByProductAttributesFeature(feature);
+    public Page<ProductsModel> searchByFeature(String feature,  int page, int size) {
 
+        Pageable pageable = PageRequest.of(page, size);
+        List<ProductsModel> productsPriceBetween = productRepo.findByProductAttributesFeature(feature);
+        if (productsPriceBetween.isEmpty()) {
+            throw new NotFoundException("feature not found");
+        }
+        return productRepo.findByProductAttributesFeature(feature , pageable);
     }
 
     @Override
-    public List<ProductsModel> RangerDiscount(double minDiscount, double maxDiscount) {
-        return productRepo.findByProductDiscountBetween(minDiscount, maxDiscount);
+    public Page<ProductsModel> RangerDiscount(double minDiscount, double maxDiscount,  int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        List<ProductsModel> productsPriceBetween = productRepo.findByProductDiscountBetween(minDiscount, maxDiscount);
+        if (productsPriceBetween.isEmpty()) {
+            throw new NotFoundException("discount range not found");
+        }
+        return productRepo.findByProductDiscountBetween(minDiscount, maxDiscount, pageable );
     }
 
+    @Override
+    public Page<ProductsModel> getAllProductByName(String ProductName, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        List<ProductsModel> productsProductName= productRepo.findByProductName(ProductName);
+        if (productsProductName.isEmpty()) {
+            throw new NotFoundException("product not found");
+        }
+        return productRepo.findByProductName( ProductName, pageable );
+    }
 
 }

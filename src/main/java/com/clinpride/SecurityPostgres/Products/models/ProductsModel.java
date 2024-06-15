@@ -45,7 +45,6 @@ public class ProductsModel {
 
     private String wholesalersName;
     private String wholesalerProductPrice;
-
     private String wholesalersEmail;
     private String wholesalersPhone;
 
@@ -55,7 +54,6 @@ public class ProductsModel {
         private String categoryName;
         private String imageUrl;
     }
-
     @Data
     public static class Image {
         private String imageUrl;

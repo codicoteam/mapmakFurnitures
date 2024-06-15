@@ -10,8 +10,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
-
-@CrossOrigin(origins = "http://localhost:5000" ,allowCredentials = "true")
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 @RestController
 @RequestMapping("/api/v1/products")
 
@@ -23,7 +24,6 @@ public class Controllers {
         this.productService = productService;
     }
 
-    @CrossOrigin(origins = "http://localhost:5000" ,allowCredentials = "true")
     @PostMapping("/create-product")
     public ResponseEntity<ProductsModel> createProduct(@RequestBody ProductsModel product) {
         ProductsModel savedProduct = productService.createProduct(product);
@@ -31,9 +31,10 @@ public class Controllers {
     }
 
     @GetMapping("/getall-products")
-    public List<ProductsModel> getAllProducts() {
-        return productService.getAllProduct();
+    public Page<ProductsModel> getAllProducts(@RequestParam int page, int size) {
+        return productService.getAllProduct(page, size);
     }
+
 
     @GetMapping("find-product/{id}")
     public ResponseEntity<ProductsModel> getProductById(@PathVariable String id) {
@@ -64,36 +65,48 @@ public class Controllers {
         return updatedProductOptional.map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 
-    @GetMapping("/category/{categoryName}")
-    public List<ProductsModel> getProductsByCategoryName(@PathVariable String categoryName) {
-        return productService.searchCategory(categoryName);
+
+    @GetMapping("/category")
+    public Page<ProductsModel> getProductsByCategoryName(@RequestParam int page, int size, String categoryName) {
+        return productService.searchCategory(categoryName, page, size);
     }
 
-    @GetMapping("/color/{color}")
-    public List<ProductsModel> getProductsByColor(@PathVariable String color) {
-        return productService.searchColor(color);
+
+
+    @GetMapping("/color")
+    public Page<ProductsModel>  getProductsByColor(@RequestParam int page, int size, String color) {
+        return productService.searchColor(color, page, size);
     }
 
-    @GetMapping("/type/{type}")
-    public List<ProductsModel> getProductsByType(@PathVariable String type) {
-        return productService.searchType(type);
+    @GetMapping("/type")
+    public Page<ProductsModel> getProductsByType(@RequestParam int page, int size, String type) {
+        return productService.searchType(type, page , size);
     }
 
 
     @GetMapping("/getproductby/pricerange")
-    public List<ProductsModel> getProductsByPriceRange(@RequestParam("minPrice") double minPrice,
-                                                       @RequestParam("maxPrice") double maxPrice) {
-        return productService.RangerProduct(minPrice, maxPrice);
+    public Page<ProductsModel> getProductsByPriceRange(@RequestParam("minPrice") double minPrice,
+                                                       @RequestParam("maxPrice") double maxPrice,  @RequestParam int page, int size) {
+        return productService.RangerProduct(minPrice, maxPrice, page, size);
     }
+
+
     @GetMapping("/search/by/feature")
-    public List<ProductsModel> getProductsByFeature(@RequestParam("feature") String feature) {
-        return productService.searchByFeature(feature);
+    public Page<ProductsModel> getProductsByFeature(@RequestParam("feature") String feature, @RequestParam int page, int size) {
+        return productService.searchByFeature(feature, page , size);
     }
 
     @GetMapping("/get/product/by/product/discount")
-    public List<ProductsModel> getProductsByDiscountRange(@RequestParam("minDiscount") double minDiscount,
-                                                          @RequestParam("maxDiscount") double maxDiscount) {
-        return productService.RangerDiscount(minDiscount, maxDiscount);
+    public Page<ProductsModel> getProductsByDiscountRange(@RequestParam("minDiscount") double minDiscount,
+                                                          @RequestParam("maxDiscount") double maxDiscount,
+                                                          @RequestParam int page, int size) {
+        return productService.RangerDiscount(minDiscount, maxDiscount, page, size);
+    }
+
+
+    @GetMapping("/search/by/productname")
+    public Page<ProductsModel> getAllProductByName(@RequestParam("productName") String productName, @RequestParam int page, int size) {
+        return productService.getAllProductByName(productName, page , size);
     }
 
 }

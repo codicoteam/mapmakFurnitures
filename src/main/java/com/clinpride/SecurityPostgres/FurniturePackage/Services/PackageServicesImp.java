@@ -3,6 +3,9 @@ package com.clinpride.SecurityPostgres.FurniturePackage.Services;
 import com.clinpride.SecurityPostgres.FurniturePackage.Models.PackageModels;
 import com.clinpride.SecurityPostgres.FurniturePackage.Repo.PackageRepo;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -69,8 +72,9 @@ public class PackageServicesImp implements PackageServices{
     }
 
     @Override
-    public List<PackageModels> getAllPackage() {
-        return packageRepo.findAll();
+    public Page<PackageModels> getAllPackage(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return packageRepo.findAll(pageable);
     }
 
     @Override

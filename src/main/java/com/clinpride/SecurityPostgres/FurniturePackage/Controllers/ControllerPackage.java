@@ -4,6 +4,7 @@ import com.clinpride.SecurityPostgres.FurniturePackage.Models.PackageModels;
 import com.clinpride.SecurityPostgres.FurniturePackage.Services.PackageServices;
 import com.clinpride.SecurityPostgres.Products.models.ProductsModel;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -28,8 +29,8 @@ public class ControllerPackage {
     }
 
     @GetMapping("/getall-package")
-    public List<PackageModels> getAllProducts() {
-        return packageServices.getAllPackage();
+    public Page<PackageModels> getAllProducts(@RequestParam int page, int size) {
+        return packageServices.getAllPackage(page, size);
     }
 
 

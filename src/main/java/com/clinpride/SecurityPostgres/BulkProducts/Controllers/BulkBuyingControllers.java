@@ -4,6 +4,7 @@ import com.clinpride.SecurityPostgres.BulkProducts.Models.BulkBuying;
 import com.clinpride.SecurityPostgres.BulkProducts.Services.BulkBuyingServices;
 import com.clinpride.SecurityPostgres.FurniturePackage.Models.PackageModels;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,8 +26,8 @@ public class BulkBuyingControllers {
     }
 
     @GetMapping("/get-all-bulk-buying")
-    public List<BulkBuying> getAllBulkBuying() {
-        return bulkBuyingServices.getAllBulkBuyingModel();
+    public Page<BulkBuying> getAllBulkBuying(@RequestParam int page, int size) {
+        return bulkBuyingServices.getAllBulkBuyingModel(page, size);
     }
 
 

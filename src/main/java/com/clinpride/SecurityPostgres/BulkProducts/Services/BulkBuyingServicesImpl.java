@@ -3,6 +3,9 @@ package com.clinpride.SecurityPostgres.BulkProducts.Services;
 import com.clinpride.SecurityPostgres.BulkProducts.Models.BulkBuying;
 import com.clinpride.SecurityPostgres.BulkProducts.Repository.BulkBuyingRepo;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -70,8 +73,10 @@ public class BulkBuyingServicesImpl implements BulkBuyingServices{
     }
 
     @Override
-    public List<BulkBuying> getAllBulkBuyingModel() {
-        return bulkBuyingRepo.findAll();
+    public Page<BulkBuying> getAllBulkBuyingModel(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+
+        return bulkBuyingRepo.findAll(pageable);
     }
 
     @Override

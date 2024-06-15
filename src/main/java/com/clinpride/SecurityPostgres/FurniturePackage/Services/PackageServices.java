@@ -1,7 +1,7 @@
 package com.clinpride.SecurityPostgres.FurniturePackage.Services;
 
 import com.clinpride.SecurityPostgres.FurniturePackage.Models.PackageModels;
-import com.clinpride.SecurityPostgres.Products.models.ProductsModel;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,7 +12,9 @@ public interface PackageServices {
     boolean deletePackageByIds(List<String> packageIds);
     boolean deletePackage(String id);
     PackageModels createPackage(PackageModels packageModels);
-    List<PackageModels> getAllPackage();
+
+    Page<PackageModels> getAllPackage(int page, int size);
+
     Optional<PackageModels> getOnePackage(String id);
     List<PackageModels> searchPackageCategory(String categoryName);
     List<PackageModels> searchPackageColor(String color);
